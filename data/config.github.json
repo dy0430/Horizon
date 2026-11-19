@@ -1,9 +1,9 @@
 {
   "ai": {
-    "provider": "deepseek",
-    "model": "deepseek-v4-flash",
-    "base_url": "https://api.deepseek.com",
-    "api_key_env": "DEEPSEEK_API_KEY",
+    "provider": "openai",
+    "model": "moonshotai/kimi-k3.1-pro",
+    "base_url": "https://api.numes.ai/api/v1",
+    "api_key_env": "OPENAI_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
     "throttle_sec": 1,
@@ -35,179 +35,118 @@
   "sources": {
     "github": [
       {
-        "type": "user_events",
-        "username": "karpathy",
+        "name": "Horizon",
+        "repo": "Thysrael/Horizon",
         "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "vllm-project",
-        "repo": "vllm",
-        "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "sgl-project",
-        "repo": "sglang",
-        "enabled": true,
-        "profile": "tech-news"
-      },
-      {
-        "type": "repo_releases",
-        "owner": "triton-lang",
-        "repo": "triton",
-        "enabled": true,
-        "profile": "tech-news"
+        "category": "AI"
       }
     ],
-    "hackernews": {
-      "enabled": true,
-      "fetch_top_stories": 30,
-      "min_score": 150,
-      "profile": "tech-news"
-    },
     "rss": [
       {
-        "name": "Simon Willison",
-        "url": "https://simonwillison.net/atom/everything/",
+        "name": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
         "enabled": true,
-        "category": "ai-tools",
-        "profile": "tech-news"
+        "category": "AI",
+        "profile": "tech"
       },
       {
-        "name": "vLLM Blog",
-        "url": "https://vllm.ai/blog/rss.xml",
+        "name": "Anthropic News",
+        "url": "https://www.anthropic.com/news/rss.xml",
         "enabled": true,
-        "category": "llm-inference",
-        "profile": "tech-blog",
-        "content_extractor": "trafilatura"
+        "category": "AI",
+        "profile": "tech"
       },
       {
-        "name": "Sean Goedecke",
-        "url": "https://www.seangoedecke.com/rss.xml",
+        "name": "Google DeepMind Blog",
+        "url": "https://deepmind.google/blog/rss.xml",
         "enabled": true,
-        "category": "software-engineering",
-        "profile": "tech-blog",
-        "content_extractor": "trafilatura"
+        "category": "AI",
+        "profile": "tech"
       },
       {
-        "name": "CNBC Finance",
-        "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
+        "name": "MIT Technology Review - AI",
+        "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed/",
         "enabled": true,
-        "category": "finance",
-        "profile": "finance-news",
-        "content_extractor": "trafilatura"
+        "category": "AI",
+        "profile": "tech"
       },
       {
-        "name": "GitHub Trending - Daily",
-        "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+        "name": "Free LLM Intel - Model Changes",
+        "url": "https://free-llm-intel.aishort.top/feeds/llm-intel-changes.xml",
         "enabled": true,
-        "category": "github-trending",
-        "profile": "tech-news"
+        "category": "AI",
+        "profile": "tech"
       },
       {
-        "name": "Semianalysis",
-        "url": "https://newsletter.semianalysis.com/feed",
+        "name": "Free LLM Intel - LLM News",
+        "url": "https://free-llm-intel.aishort.top/feeds/llm-news-all.xml",
         "enabled": true,
-        "category": "semiconductors",
-        "profile": "tech-news"
-      },
-      {
-        "name": "LWN.net",
-        "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
-        "enabled": true,
-        "category": "linux-kernel",
-        "profile": "tech-news"
+        "category": "AI",
+        "profile": "tech"
       }
     ],
-    "reddit": {
-      "enabled": true,
-      "subreddits": [
-        {
-          "subreddit": "MachineLearning",
-          "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60,
-          "profile": "tech-news"
-        },
-        {
-          "subreddit": "LocalLLaMA",
-          "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60,
-          "profile": "tech-news"
+    "web": [
+      {
+        "name": "Hacker News",
+        "url": "https://news.ycombinator.com/",
+        "enabled": true,
+        "category": "Tech",
+        "profile": "tech-blog",
+        "content_extractor": {
+          "container_selector": "table.itemlist",
+          "item_selector": "tr.athing",
+          "title_selector": ".titleline > a",
+          "link_selector": ".titleline > a",
+          "score_selector": "span.score"
         }
-      ],
-      "users": [],
-      "fetch_comments": 10
+      }
+    ]
+  },
+  "scoring": {
+    "weights": {
+      "trend": 0.5,
+      "impact": 0.4,
+      "readability": 0.1
     },
-    "telegram": {
-      "enabled": true,
-      "channels": [
-        {
-          "channel": "zaihuapd",
-          "enabled": true,
-          "fetch_limit": 20,
-          "profile": ["tech-news", "finance-news"]
-        }
-      ]
+    "quality_gate": {
+      "min_total": 15.0
     }
   },
-  "collection": {
-    "time_window_hours": 24
-  },
-  "digest": {
-    "max_items": null,
-    "profile_order": [
-      "tech-news",
-      "tech-blog",
-      "finance-news"
+  "filters": {
+    "min_content_chars": 80,
+    "blocklist": [
+      "广告",
+      "推广",
+      "sponsor"
     ],
-    "category_groups": {},
-    "default_group": "other",
-    "default_group_limit": null
+    "require_keywords": []
   },
-  "webhook": {
-    "enabled": true,
-    "url_env": "HORIZON_WEBHOOK_URL",
-    "delivery": "summary_and_items",
-    "overview_position": "last",
-    "platform": "feishu",
-    "layout": "collapsible",
-    "fallback_layout": "markdown",
-    "languages": [
-      "zh"
-    ],
-    "request_body": {
-      "msg_type": "interactive",
-      "card": {
-        "schema": "2.0",
-        "config": {
-          "wide_screen_mode": true
-        },
-        "header": {
-          "title": {
-            "tag": "plain_text",
-            "content": "#{message_title}"
-          },
-          "template": "blue"
-        },
-        "body": {
-          "elements": [
-            {
-              "tag": "markdown",
-              "content": "#{summary}"
-            }
-          ]
-        }
-      }
-    },
-    "headers": ""
+  "output": {
+    "directory": "docs",
+    "file_prefix": "daily",
+    "filename_template": "daily-{date}.md",
+    "date_format": "%Y-%m-%d",
+    "timezone": "Asia/Shanghai",
+    "use_utc": true,
+    "include_raw": true,
+    "include_json": true
+  },
+  "schedule": {
+    "hours": 24,
+    "window_start": "08:00",
+    "window_end": "08:10"
+  },
+  "github": {
+    "commit_enabled": false,
+    "commit_message_template": "Daily update {date}",
+    "branch": "main"
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s %(levelname)s %(name)s: %(message)s"
+  },
+  "llm_cache": {
+    "cache_path": "data/cache/llm_cache.sqlite",
+    "max_age_hours": 720
   }
 }
