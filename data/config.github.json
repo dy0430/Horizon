@@ -1,8 +1,8 @@
 {
   "ai": {
     "provider": "openai",
-    "model": "moonshotai/kimi-k3.1-pro",
-    "base_url": "https://api.numes.ai/api/v1",
+    "model": "ganymede-1.1",
+    "base_url": "https://chat.merkium.nl/api/v1",
     "api_key_env": "OPENAI_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
